@@ -1,0 +1,7 @@
+AddDefaultCharset UTF-8
+AddCharset utf-8 .html .css .js .php
+DirectoryIndex index.php index.html
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule ^(.*)$ public/$1 [L]
+

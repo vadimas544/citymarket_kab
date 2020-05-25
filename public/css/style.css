@@ -1,0 +1,49 @@
+body{
+
+}
+.edit{
+    margin-left: 20px;
+}
+.card-wrapper{
+    width: 600px;
+    height: 200px;
+    /*border: 1px solid grey;*/
+    position: relative;
+}
+.card-front{
+    width: 500px;
+    height: 170px;
+    border: 1px solid grey;
+    border-radius: 15px;
+    position: absolute;
+    background: #c2c2c2;
+}
+.card-logo{
+    height: 40px;
+    position: absolute;
+    left: 15px;
+
+}
+.card-text{
+    height: 40px;
+    position: absolute;
+    right: 20px;
+}
+#card-number{
+    position: absolute;
+    width: 90%;
+    margin: 0 5%;
+    background: #f1f1f1;
+    font-size: 30px;
+    padding: 5px;
+    border: none;
+    top: 45px;
+    outline: none;
+}
+.card-text-bottom{
+    position: absolute;
+    height: 40px;
+    bottom: 10px;
+    left: 15px;
+}
+
