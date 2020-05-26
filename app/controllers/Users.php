@@ -149,41 +149,24 @@ class Users extends Controller
                 $data['phone_error'] = 'Будь-ласка введіть номер телефону!';
             }
 
-//            //Check for user phone
-//            if($this->userModel->checkPhone($data['phone'])){
-//                //User found
-//            }else{
-            /*                $data['phone_error'] = "Користувача з таким номером не знайдено. Необхідно пройти процедуру <a href='<?php echo URLROOT?>/users/login'>реєстрації</a>>!!!";*/
-//            }
-
             //Validate Password
             if (empty($data['password'])) {
                 $data['password_error'] = 'Будь-ласка введіть пароль!';
             }
 
-            //Check that password is not empty
-//            if($this->userModel->checkPassword($data['phone'])){
-//                //Password is be
-//            }else{
-//                $data['password_error'] = 'Такого пользователя нет. Нужно пройти процедуру регистрации!';
-//            }
-
             //Make sure errors are empty
 
             if (empty($data['phone_error']) && empty($data['password_error'])) {
                 //Validated
-                if ($code_client = $this->userModel->checkPhone($data['phone'])) {
+                if ($this->userModel->checkPhone($data['phone'])) {
 
                     //User found
-                    $loggedInUser = $this->userModel->login($data['phone'], $data['password']);
-//                    echo '<pre>';
-//                    var_dump($loggedInUser);
-//                    die();
-                    if ($loggedInUser) {
+                    if($this->userModel->login($data['phone'], $data['password'])){
                         //Create Session
-                        $this->createUserSession($loggedInUser);
+                        $this->userModel->createSession($data['phone']);
                         redirect('users/cabinet');
-                    } else {
+                    }
+                    else {
                         $data['password_error'] = 'Пароль невірний!';
                         $this->view('users/login', $data);
                     }
@@ -191,31 +174,6 @@ class Users extends Controller
                     $data['password_error'] = "Користувача з таким номером не знайдено. Необхідно пройти процедуру реєстрації!";
                     $this->view('users/login', $data);
                 }
-
-                //Check and set logged in user
-
-//
-
-//
-//                } else {
-//                    $data['password_error'] = 'Пароль невірний!';
-//                    $this->view('users/login', $data);
-//                }
-//                    //Init data
-//                    $data = [
-//                        'phone' => '',
-//                        'password' => '',
-//                        'phone_error' => '',
-//                        'password_error' => '',
-//                    ];
-//
-//
-//                    //Load view
-//                    $this->view('users/login', $data);
-//                }
-//
-//        }
-
 
             } else{
                 $this->view('users/login', $data);
@@ -299,25 +257,20 @@ class Users extends Controller
 
 
 
-    public function createUserSession($user)
-    {
-        $_SESSION['code_client'] = $user;
-//        echo $_SESSION['code_client'];
-//        die();
-//        $_SESSION['user_name'] = $user->name;
-//        $_SESSION['user_phone'] = $user->phone;
-
-        redirect('users/cabinet');
-
-    }
+//    public function createUserSession($user)
+//    {
+//        $_SESSION['code_client'] = $user;
+//
+//    }
 
     public function cabinet(){
 
-        $code_client = $_SESSION['code_client'];
-        //var_dump($code_client);
+        $code_client =$_SESSION['code_client'];
+        ////var_dump($code_client);
+
         $data = $this->userModel->cabinetInfo($code_client);
-//        echo '<pre>';
-//        var_dump($data);
+        //echo '<pre>';
+        //var_dump($data);
         $this->view('users/cabinet', $data);
     }
 

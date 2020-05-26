@@ -123,4 +123,17 @@ class User
         return $data;
     }
 
+    public function createSession($phone){
+
+        $res = $this->api->info($phone);
+
+        $res = json_decode($res, true);
+
+        $code_client = $res['response']['client']['code_client'];
+
+        //$code_client = $_SESSION['code_client'];
+
+        $_SESSION['code_client'] = $code_client;
+    }
+
 }
